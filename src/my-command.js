@@ -26,20 +26,26 @@ export default function() {
 
   selectedArtboards.forEach(artboard => {
 
+    const artboardName = artboard.name;
+
     artboard.layers.forEach((layer, index) => {   
         // Hide all layers in the copy
         artboard.layers.forEach(l => l.hidden = true);
 
         layer.hidden = false
 
-        const paddedIndex = String(index + 1).padStart(2, '0');
+        const paddedIndex = String(index).padStart(2, '0');
+
+        artboard.name = `${artboardName}-${paddedIndex}`
 
         // Set output path with padded index in filename
-        exportOptions.output = `${outputPath}/${artboard.name}/${artboard.name}-${paddedIndex}`;
+        exportOptions.output = `${outputPath}/${artboardName}`;
 
         // Export the artboard
         sketch.export(artboard, exportOptions);
     });
+
+    artboard.name = `${artboardName}`
 });
 
 
